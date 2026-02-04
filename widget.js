@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Configuration
-    const API_URL = "http://127.0.0.1:5000"; // Point to your local Flask backend
+    const API_URL = "https://spoonai-api.onrender.com"; // Point to your local Flask backend
     
     // DOM Elements
     const chatWindow = document.getElementById('spoonai-chat-window');
