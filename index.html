@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Golden Spoon | Modern Dining</title>
+    <title>The Golden Spoon | AI Reservation Demo</title>
     <style>
-        /* --- MODERN RESET & TYPOGRAPHY --- */
+        /* --- NEUTRAL MODERN THEME --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            color: #f5f5f5; /* Off-white text */
-            background-color: #1a1a1a; /* Dark base */
+            color: #e5e5e5; /* Soft white */
+            background-color: #121212; /* Deep neutral black */
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* --- SMOKE EFFECT BACKGROUND --- */
+        /* --- SMOKE ANIMATION --- */
         .smoke-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            background: linear-gradient(125deg, #1a1a1a, #2c2c2c, #3d3d3d, #1a1a1a);
+            /* Neutral Greys Only - No Colors */
+            background: linear-gradient(125deg, #000000, #1a1a1a, #2b2b2b, #000000);
             background-size: 400% 400%;
-            animation: smokeMove 15s ease infinite;
+            animation: smokeMove 20s ease infinite;
         }
         @keyframes smokeMove {
             0% { background-position: 0% 50%; }
@@ -29,48 +33,56 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- HERO SECTION --- */
+        /* --- MAIN CONTENT --- */
         .hero {
-            height: 100vh;
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 2rem;
-            backdrop-filter: blur(2px);
         }
         h1 {
-            font-size: 4rem;
-            font-weight: 200; /* Thin, elegant font */
-            letter-spacing: 0.5rem;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            font-weight: 100; /* Ultra thin luxury look */
+            letter-spacing: 0.8rem;
+            margin-bottom: 1.5rem;
             text-transform: uppercase;
-        }
-        p.subtitle {
-            font-size: 1.2rem;
-            color: #a0a0a0;
-            letter-spacing: 0.2rem;
-            max-width: 600px;
-            line-height: 1.6;
+            border-bottom: 1px solid #333;
+            padding-bottom: 2rem;
         }
         
-        /* --- MOCK CONTENT (To make it scrollable) --- */
-        .content {
-            padding: 4rem 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            border-top: 1px solid #333;
+        /* --- DISCLAIMER BOX --- */
+        .disclaimer-box {
+            margin-top: 3rem;
+            background: rgba(255, 255, 255, 0.05); /* Glass effect */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            max-width: 600px;
+            border-radius: 8px;
+            text-align: left;
         }
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #333;
+        .disclaimer-box h4 {
+            color: #a3a3a3;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
         }
-        .menu-item h3 { font-weight: 400; font-size: 1.5rem; }
-        .menu-item span { color: #888; }
+        .disclaimer-box p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+            margin-bottom: 1rem;
+        }
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-color: #555;
+        }
+
     </style>
 </head>
 <body>
@@ -79,32 +91,25 @@
 
     <div class="hero">
         <h1>The Golden Spoon</h1>
-        <p class="subtitle">EXPERIENCE THE ART OF MODERN ITALIAN CUISINE.</p>
-        <p style="margin-top: 2rem; font-size: 0.9rem; color: #666;">EST. 2024 • MINNEAPOLIS</p>
-    </div>
-
-    <div class="content">
-        <div class="menu-item">
-            <h3>Osso Buco Milanese</h3>
-            <span>$42</span>
-        </div>
-        <div class="menu-item">
-            <h3>Lobster Ravioli</h3>
-            <span>$38</span>
-        </div>
-        <div class="menu-item">
-            <h3>Truffle Beef Carpaccio</h3>
-            <span>$24</span>
+        
+        <div class="disclaimer-box">
+            <h4>Developer Note</h4>
+            <p>
+                You are viewing a <strong>live technical demo</strong>.
+            </p>
+            <p>
+                The only feature being installed on your website is the <span class="highlight">Chat Bubble</span> (located in the bottom right).
+            </p>
+            <p>
+                <em>* This demo uses a neutral dark theme, but the actual chat widget will be customized to match your restaurant's specific brand colors, fonts, and style perfectly.</em>
+            </p>
         </div>
     </div>
 
     <script>
-        // 1. Identify the Client (Matches your 'demo_restaurant' config)
         window.SPOONAI_CLIENT_ID = "demo_restaurant";
     </script>
-    
     <div id="spoonai-widget-container"></div>
-    
     <script src="widget.js" defer></script>
 
 </body>

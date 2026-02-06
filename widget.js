@@ -19,7 +19,7 @@
     }
 
     container.innerHTML = `
-        <button id="spoonai-toggle-btn" class="fixed bottom-4 right-4 bg-amber-600 text-white p-4 rounded-full shadow-lg hover:bg-amber-700 transition-all z-50">
+        <button id="spoonai-toggle-btn" class="fixed bottom-4 right-4 bg-zinc-800 text-white p-4 rounded-full shadow-lg hover:bg-black transition-all z-50">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
@@ -27,11 +27,11 @@
 
         <div id="spoonai-chat-window" class="fixed bottom-20 right-4 w-80 md:w-96 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden transform transition-all duration-300 origin-bottom-right opacity-0 scale-95 hidden z-50 flex flex-col max-h-[500px]">
             
-            <div class="bg-amber-600 p-4 text-white flex justify-between items-center shadow-sm">
+            <div class="bg-zinc-800 p-4 text-white flex justify-between items-center shadow-sm">
                 <h3 class="font-bold text-lg flex items-center gap-2">
                     <span>🥄</span> Guest Assistant
                 </h3>
-                <button id="spoonai-close-btn" class="hover:bg-amber-700 p-1 rounded transition-colors">
+                <button id="spoonai-close-btn" class="hover:bg-black p-1 rounded transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -45,7 +45,7 @@
             <div class="p-3 border-t bg-white flex gap-2">
                 <input type="text" id="spoonai-input" placeholder="Type a message..." 
                     class="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-600 focus:ring-1 focus:ring-amber-600 transition-all">
-                <button id="spoonai-send-btn" class="bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                <button id="spoonai-send-btn" class="bg-zinc-800 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                     Send
                 </button>
             </div>
@@ -97,7 +97,7 @@
         
         div.className = `max-w-[80%] p-3 rounded-lg text-sm ${
             isUser 
-                ? 'bg-amber-600 text-white self-end rounded-br-none ml-auto' 
+                ? 'bg-zinc-800 text-white self-end rounded-br-none ml-auto' 
                 : 'bg-gray-200 text-gray-800 self-start rounded-bl-none mr-auto'
         }`;
         
