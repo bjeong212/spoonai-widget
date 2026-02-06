@@ -4,13 +4,12 @@
     const CLIENT_ID = window.SPOONAI_CLIENT_ID || "demo_restaurant";
     
     // --- STYLES (INJECTED) ---
-    // This ensures the widget looks perfect on ANY website without needing extra files.
     const styleSheet = document.createElement("style");
     styleSheet.textContent = `
         /* Reset for Widget */
         #spoonai-widget-wrapper * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
         
-        /* The Wrapper */
+        /* Wrapper: Fixed to Bottom Right */
         #spoonai-widget-wrapper {
             position: fixed;
             bottom: 20px;
@@ -22,12 +21,12 @@
             gap: 10px;
         }
 
-        /* The Toggle Button (Bubble) */
+        /* Toggle Button */
         #spoonai-toggle-btn {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background-color: #262626; /* Neutral Dark Grey */
+            background-color: #262626; /* Dark Grey */
             color: white;
             border: none;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -40,14 +39,14 @@
         #spoonai-toggle-btn:hover { background-color: #000; transform: scale(1.05); }
         #spoonai-toggle-btn svg { width: 30px; height: 30px; }
 
-        /* The Chat Window */
+        /* Chat Window */
         #spoonai-chat-window {
             width: 350px;
             height: 500px;
             background: white;
             border-radius: 12px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            display: none; /* Hidden by default */
+            display: none;
             flex-direction: column;
             overflow: hidden;
             border: 1px solid #e5e5e5;
@@ -57,7 +56,7 @@
 
         /* Header */
         .spoonai-header {
-            background-color: #262626; /* Neutral Header */
+            background-color: #262626;
             color: white;
             padding: 16px;
             display: flex;
@@ -65,9 +64,7 @@
             align-items: center;
             font-weight: 600;
         }
-        .spoonai-close {
-            background: none; border: none; color: white; cursor: pointer; font-size: 20px;
-        }
+        .spoonai-close { background: none; border: none; color: white; cursor: pointer; font-size: 20px; }
 
         /* Messages Area */
         .spoonai-messages {
@@ -82,26 +79,29 @@
         
         /* Message Bubbles */
         .spoonai-msg {
-            max-width: 80%;
+            max-width: 85%; /* Slightly wider for lists */
             padding: 10px 14px;
             border-radius: 12px;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.5;
         }
         .spoonai-msg-user {
             align-self: flex-end;
-            background-color: #262626; /* Neutral User Bubble */
+            background-color: #262626;
             color: white;
             border-bottom-right-radius: 2px;
         }
         .spoonai-msg-bot {
             align-self: flex-start;
-            background-color: #e5e5e5; /* Light Grey Bot Bubble */
+            background-color: #e5e5e5;
             color: #1a1a1a;
             border-bottom-left-radius: 2px;
         }
-        .spoonai-msg-bot a { color: #d97706; font-weight: bold; text-decoration: none; }
-        .spoonai-msg-bot a:hover { text-decoration: underline; }
+        
+        /* Formatting for Bold and Lists */
+        .spoonai-msg-bot b, .spoonai-msg-bot strong { font-weight: 700; color: #000; }
+        .spoonai-msg-bot ul { padding-left: 20px; margin: 5px 0; }
+        .spoonai-msg-bot li { margin-bottom: 4px; }
 
         /* Input Area */
         .spoonai-input-area {
@@ -145,18 +145,14 @@
         }
         .spoonai-loading span:nth-child(1) { animation-delay: -0.32s; }
         .spoonai-loading span:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes spoonai-bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
-        }
+        @keyframes spoonai-bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
     `;
     document.head.appendChild(styleSheet);
 
     // --- HTML INJECTION ---
     const container = document.getElementById('spoonai-widget-container');
-    if (!container) return; // Fail silently if container is missing
+    if (!container) return; 
 
-    // Create a wrapper to hold everything
     const wrapper = document.createElement('div');
     wrapper.id = 'spoonai-widget-wrapper';
     container.appendChild(wrapper);
@@ -173,7 +169,6 @@
                 <button id="spoonai-send">Send</button>
             </div>
         </div>
-
         <button id="spoonai-toggle-btn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -196,26 +191,45 @@
     }
     let isTyping = false;
 
-    // Toggle Visibility
+    // --- HELPER: FORMATTER FUNCTION ---
+    function formatMessage(text) {
+        // 1. Bold: **text** -> <b>text</b>
+        let formatted = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+        
+        // 2. Bullets: - item -> <br>• item
+        // This regex looks for newlines followed by a dash
+        formatted = formatted.replace(/\n\s*-\s/g, '<br>• ');
+        
+        // 3. Newlines: \n -> <br>
+        formatted = formatted.replace(/\n/g, '<br>');
+        
+        return formatted;
+    }
+
     function toggleChat() {
         chatWindow.classList.toggle('open');
+        // Intro Message (Multilingual)
         if (chatWindow.classList.contains('open') && messagesDiv.children.length === 0) {
-            addMessage("Hello! How can I help you with our menu or reservations?", 'bot');
+            addMessage("Hello! How can I help you with our menu or reservations? (I answer in any language 🌎)", 'bot');
         }
     }
 
-    // Add Message to UI
     function addMessage(text, sender) {
         const div = document.createElement('div');
         div.className = `spoonai-msg spoonai-msg-${sender}`;
-        if (sender === 'bot') div.innerHTML = text;
-        else div.innerText = text;
+        
+        if (sender === 'bot') {
+            // Apply formatting for the bot
+            div.innerHTML = formatMessage(text);
+        } else {
+            // No formatting for user (Security)
+            div.innerText = text;
+        }
         
         messagesDiv.appendChild(div);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 
-    // Add Loading Animation
     function addLoading() {
         const div = document.createElement('div');
         div.id = 'spoonai-loading-indicator';
@@ -230,7 +244,6 @@
         if (el) el.remove();
     }
 
-    // Send to Backend
     async function sendMessage() {
         const text = inputField.value.trim();
         if (!text || isTyping) return;
