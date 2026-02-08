@@ -187,7 +187,7 @@
             </div>
 
             <div class="spoonai-legal">
-                Powered by 2SyL Neural • <a href="https://bjeong212.github.io/spoonai-widget/privacy.html" target="_blank">Privacy & Terms</a>
+                Powered by 2SyL Neural • <a href="https://docs.google.com/document/d/1t_cm1z7wv6L73I2S7LDPS3iMKim5G2rtj5s8AXIBdzw/edit?usp=sharing" target="_blank">Privacy & Terms</a>
             </div>
         </div>
 
