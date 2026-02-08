@@ -146,6 +146,22 @@
         .spoonai-loading span:nth-child(1) { animation-delay: -0.32s; }
         .spoonai-loading span:nth-child(2) { animation-delay: -0.16s; }
         @keyframes spoonai-bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        .spoonai-legal {
+            background-color: #f9f9f9;
+            padding: 8px;
+            text-align: center;
+            font-size: 10px;
+            color: #888;
+            border-top: 1px solid #eee;
+        }
+        .spoonai-legal a {
+            color: #666;
+            text-decoration: none;
+        }
+        .spoonai-legal a:hover {
+            text-decoration: underline;
+        }
     `;
     document.head.appendChild(styleSheet);
 
@@ -164,13 +180,19 @@
                 <button class="spoonai-close" id="spoonai-close-btn">×</button>
             </div>
             <div class="spoonai-messages" id="spoonai-messages"></div>
+            
             <div class="spoonai-input-area">
                 <input type="text" id="spoonai-input" placeholder="Type a message...">
                 <button id="spoonai-send">Send</button>
             </div>
+
+            <div class="spoonai-legal">
+                Powered by 2SyL Neural • <a href="https://your-privacy-link.com" target="_blank">Privacy</a>
+            </div>
         </div>
+
         <button id="spoonai-toggle-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
         </button>
