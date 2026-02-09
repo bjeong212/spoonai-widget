@@ -166,8 +166,8 @@
     document.head.appendChild(styleSheet);
 
     // --- HTML INJECTION ---
-    const container = document.getElementById('spoonai-widget-container');
-    if (!container) return; 
+    
+    const container = document.body;
 
     const wrapper = document.createElement('div');
     wrapper.id = 'spoonai-widget-wrapper';
